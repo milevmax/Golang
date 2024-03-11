@@ -37,7 +37,6 @@ func (c Cage) calcSquare() float32 {
 
 type Animal struct {
 	breed string
-	//name  string
 	weigh float32
 	cage  *Cage
 	WaterEnv
@@ -67,7 +66,7 @@ func (z *ZooKeeper) putToCage(cage *Cage) {
 
 	switch {
 	case z.hold == nil:
-		fmt.Println("You didn't catch anyone\n")
+		fmt.Println("Zoo keeper didn't catch anyone\n")
 	case cage.occupiedBy != nil:
 		fmt.Printf("The cage occupied by %v\n", cage.occupiedBy)
 	case cage.calcSquare()/z.hold.weigh < squareWeightFraction:
@@ -77,8 +76,8 @@ func (z *ZooKeeper) putToCage(cage *Cage) {
 	default:
 		z.hold.cage = cage
 		cage.occupiedBy = z.hold
-		//z.hold = nil
-		fmt.Printf("%v got into the cage number: %v\n", z.hold.breed, cage.number)
+		z.hold = nil // !!!???
+		fmt.Printf("%v got into the cage number: %v\n", cage.occupiedBy.breed, cage.number)
 	}
 }
 
@@ -99,8 +98,12 @@ func main() {
 	keeper_1 := ZooKeeper{name: "Petro", experience: 22}
 	//keeper_2 := ZooKeeper{name: "Bob", experience: 3}
 
+	fmt.Println(keeper_1)
 	keeper_1.catchAnimal(&tiger_1)
+
+	fmt.Println(keeper_1)
 	keeper_1.putToCage(&cage_1)
+	fmt.Println(keeper_1)
 
 	keeper_1.putToCage(&cage_4)
 }
