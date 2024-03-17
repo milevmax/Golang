@@ -6,6 +6,16 @@ import (
 	"time"
 )
 
+var (
+	IntroStateName          string = "intro"
+	CarriageStateName       string = "carriage"
+	InfoBoardStateName      string = "info board"
+	CommunicationDeviceName string = "communication device"
+	StopTapName             string = "stop tap"
+	CarriageMovingStateName string = "carriage move"
+	EavesdropStateName      string = "eavesdrop"
+)
+
 func ReplaceByIndex(sourceStr string, ind int, replacement rune) (string, rune) {
 	symbols := []rune(sourceStr)
 	oldValue := symbols[ind]
