@@ -1,6 +1,9 @@
 package Story
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func InitCarriage(carriageNumberStart, carriageNumberHead, carriageNumberTail int) Carriage {
 	carriageActions := make([]string, 7, 10)
@@ -110,9 +113,11 @@ func (c *Carriage) GoAnotherCarriage(direction int) {
 
 	switch {
 	case carriageCandidate < c.carriageNumberHead:
-		fmt.Println("Ви в хвості потягу")
+		fmt.Println("\nВи в хвості потягу")
+		time.Sleep(1 * time.Second)
 	case carriageCandidate > c.carriageNumberTail:
-		fmt.Println("Вперлись в вагон машиніста")
+		fmt.Println("\nВперлись в вагон машиніста")
+		time.Sleep(1 * time.Second)
 	default:
 		GoCarriageHeadAnimation(direction)
 		c.currentCarriageNumber = carriageCandidate
