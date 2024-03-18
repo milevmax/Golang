@@ -19,7 +19,7 @@ func processText(sentences []string) []string {
 	return sentences
 }
 
-func findSentence(targetSubStr string, sentences []string) (sentencesSlice []string) {
+func findSentence_old(targetSubStr string, sentences []string) (sentencesSlice []string) {
 
 	sentencesSlice = make([]string, 0, len(sentences))
 	var lenSubStr int = len(targetSubStr)
@@ -35,6 +35,35 @@ func findSentence(targetSubStr string, sentences []string) (sentencesSlice []str
 		}
 	}
 	return sentencesSlice
+}
+
+func findSentence(targetSubStr string, sentences []string) (sentencesIndexes []int) {
+
+	sentences = processText(sentences)
+	sentencesIndexes = make([]int, 0, len(sentences))
+	var lenSubStr int = len(targetSubStr)
+
+	for ind, sen := range sentences {
+		for i := 0; i < len(sen)-lenSubStr; i++ {
+			IterSubStr := sen[i : i+lenSubStr]
+
+			if IterSubStr == targetSubStr {
+				sentencesIndexes = append(sentencesIndexes, ind)
+				break
+			}
+		}
+	}
+	return sentencesIndexes
+}
+
+func getSenByIdexes(sentences []string, sentencesIndexes []int) (sliceSentences []string) {
+
+	sliceSentences = make([]string, 0, len(sentencesIndexes))
+
+	for _, i := range sentencesIndexes {
+		sliceSentences = append(sliceSentences, sentences[i])
+	}
+	return sliceSentences
 }
 
 func main() {
@@ -53,9 +82,19 @@ func main() {
 	fmt.Println()
 	fmt.Println()
 
-	targetStr := "solar system"
-	resultSentences := findSentence(targetStr, processesText)
-	for _, s := range resultSentences {
+	targetStr_1 := "solar system"
+	resultSentences_1 := findSentence_old(targetStr_1, processesText)
+	for _, s := range resultSentences_1 {
+		fmt.Println(s)
+	}
+
+	fmt.Println()
+	fmt.Println()
+
+	targetStr_2 := "solar system"
+	resultIndxes := findSentence(targetStr_2, textSentences)
+	resultSentences_2 := getSenByIdexes(textSentences, resultIndxes)
+	for _, s := range resultSentences_2 {
 		fmt.Println(s)
 	}
 }
