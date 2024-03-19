@@ -11,35 +11,21 @@ var (
 )
 
 func processText(sentences []string) []string {
-	for i, v := range sentences {
+	sentencesProcessed := make([]string, len(sentences))
+	copy(sentencesProcessed, sentences)
+	for i, v := range sentencesProcessed {
 		senIter := strings.ToLower(v)
 		senIter = strings.TrimSpace(senIter)
-		sentences[i] = senIter
+		sentencesProcessed[i] = senIter
 	}
-	return sentences
-}
-
-func findSentence_old(targetSubStr string, sentences []string) (sentencesSlice []string) {
-
-	sentencesSlice = make([]string, 0, len(sentences))
-	var lenSubStr int = len(targetSubStr)
-
-	for _, sen := range sentences {
-		for i := 0; i < len(sen)-lenSubStr; i++ {
-			IterSubStr := sen[i : i+lenSubStr]
-
-			if IterSubStr == targetSubStr {
-				sentencesSlice = append(sentencesSlice, sen)
-				break
-			}
-		}
-	}
-	return sentencesSlice
+	return sentencesProcessed
 }
 
 func findSentence(targetSubStr string, sentences []string) (sentencesIndexes []int) {
 
 	sentences = processText(sentences)
+	targetSubStr = strings.ToLower(targetSubStr)
+
 	sentencesIndexes = make([]int, 0, len(sentences))
 	var lenSubStr int = len(targetSubStr)
 
@@ -66,35 +52,22 @@ func getSenByIdexes(sentences []string, sentencesIndexes []int) (sliceSentences 
 	return sliceSentences
 }
 
+func findMatches(text string, target string) (Sentences []string) {
+
+	textSentences := strings.Split(text, ".")
+	resultIndexes := findSentence(target, textSentences)
+	resultSentences := getSenByIdexes(textSentences, resultIndexes)
+	return resultSentences
+}
+
 func main() {
 	sourceText := sourceText_1 + sourceText_2
-	textSentences := strings.Split(sourceText, ".")
-	processesText := processText(textSentences)
-	fmt.Print(processesText)
+	targetstr := "milky way"
 
-	fmt.Println()
-	fmt.Println()
-
-	testStr := "12345abcde"
-	testStrCut := testStr[2:6]
-	fmt.Print(testStrCut)
-
-	fmt.Println()
-	fmt.Println()
-
-	targetStr_1 := "solar system"
-	resultSentences_1 := findSentence_old(targetStr_1, processesText)
-	for _, s := range resultSentences_1 {
-		fmt.Println(s)
-	}
-
-	fmt.Println()
-	fmt.Println()
-
-	targetStr_2 := "solar system"
-	resultIndxes := findSentence(targetStr_2, textSentences)
-	resultSentences_2 := getSenByIdexes(textSentences, resultIndxes)
-	for _, s := range resultSentences_2 {
+	resultSentences := findMatches(sourceText, targetstr)
+	fmt.Printf("\nTarget string: %s\n", targetstr)
+	fmt.Println("Matched sentences:")
+	for _, s := range resultSentences {
 		fmt.Println(s)
 	}
 }
