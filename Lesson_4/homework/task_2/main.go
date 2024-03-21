@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand/v2"
+	"sort"
 )
 
 type MyStruct struct {
@@ -45,6 +46,23 @@ func SliceToSet(structures []MyStruct) (setStructures []MyStruct) {
 	return setStructures
 }
 
+func SliceToSet_v2(structures []MyStruct) (setStructures []MyStruct) {
+	setStructures = make([]MyStruct, 0, len(structures))
+	sort.SliceStable(structures, func(i, j int) bool {
+		return structures[i].Id < structures[j].Id
+	})
+
+	var lastValue MyStruct = MyStruct{Id: -1}
+	for _, v := range structures {
+		if v == lastValue {
+			continue
+		}
+		setStructures = append(setStructures, v)
+		lastValue = v
+	}
+	return setStructures
+}
+
 func main() {
 	lenStruct := 20
 	workStruct := [20]MyStruct{}
@@ -54,9 +72,13 @@ func main() {
 		workStruct[i] = structIter
 	}
 	fmt.Println(workStruct)
-	inputFunc := workStruct[0:5]
+	inputFunc := workStruct[0:6]
 	fmt.Println(inputFunc)
 
 	funcRes := SliceToSet(inputFunc)
 	fmt.Println(funcRes)
+
+	funcRes2 := SliceToSet_v2(inputFunc)
+	fmt.Println(funcRes2)
+
 }
