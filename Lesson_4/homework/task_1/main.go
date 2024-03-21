@@ -12,8 +12,7 @@ var (
 
 func processText(sentences []string) []string {
 	sentencesProcessed := make([]string, len(sentences))
-	copy(sentencesProcessed, sentences)
-	for i, v := range sentencesProcessed {
+	for i, v := range sentences {
 		senIter := strings.ToLower(v)
 		senIter = strings.TrimSpace(senIter)
 		sentencesProcessed[i] = senIter
@@ -62,7 +61,7 @@ func findMatches(text string, target string) (Sentences []string) {
 
 func main() {
 	sourceText := sourceText_1 + sourceText_2
-	targetstr := "milky way"
+	targetstr := "solar system"
 
 	resultSentences := findMatches(sourceText, targetstr)
 	fmt.Printf("\nTarget string: %s\n", targetstr)
