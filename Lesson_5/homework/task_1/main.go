@@ -30,12 +30,7 @@ func (t *TextRedactor) IndexText() {
 
 			senIndxLast, ok := lastSeenIn[word]
 
-			if senIndex > senIndxLast {
-				indexMap[word] = append(indexMap[word], senIndex)
-				lastSeenIn[word] = senIndex
-			}
-
-			if !ok && senIndex == 0 {
+			if senIndex > senIndxLast || (!ok && senIndex == 0) {
 				indexMap[word] = append(indexMap[word], senIndex)
 				lastSeenIn[word] = senIndex
 			}
@@ -63,7 +58,7 @@ func main() {
 	MyRedactor.Init(sourceText)
 	MyRedactor.IndexText()
 
-	targetStr := "stars"
+	targetStr := "solar"
 	resultSentences := MyRedactor.Search(targetStr)
 
 	fmt.Printf("\nTarget string: %s\n", targetStr)

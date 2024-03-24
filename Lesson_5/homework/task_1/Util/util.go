@@ -46,10 +46,6 @@ func SplitSentences(sentences []string) (output [][]string) {
 
 	output = make([][]string, len(sentences))
 
-	for i := range output {
-		output[i] = make([]string, 20)
-	}
-
 	for i, sentence := range sentences {
 		words := SentenceToSlice(sentence)
 		output[i] = words
