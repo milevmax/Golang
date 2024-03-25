@@ -1,6 +1,7 @@
 package routesAggregator
 
 import (
+	"fmt"
 	"homeworkTask1/primitives"
 	"homeworkTask1/transport"
 )
@@ -13,6 +14,7 @@ type PublicTransport interface {
 func UseTransport(transport PublicTransport) {
 	transport.ReceivePassengers()
 	transport.DropOffPassengers()
+	fmt.Println("\nTransfer to another transport\n")
 }
 
 func NewRouteTransport(transportName primitives.TransportType) PublicTransport {
@@ -27,13 +29,18 @@ func NewRouteTransport(transportName primitives.TransportType) PublicTransport {
 		t := transport.Plane{}
 		return t
 	default:
-		return transport.ErrorTransport{}
+		return transport.ErrorTransport{ErrorTransportName: transportName}
 	}
 }
 
 func GoOverRoute(route primitives.Route) {
 	for _, t := range route {
 		routeComponentTransport := NewRouteTransport(t)
+		if _, ok := routeComponentTransport.(transport.ErrorTransport); ok {
+			fmt.Println("unexpected transport!")
+			fmt.Println(routeComponentTransport)
+			return
+		}
 		UseTransport(routeComponentTransport)
 	}
 }

@@ -14,8 +14,7 @@ func main() {
 	routesAggregator.GoOverRoute(routeDetails)
 
 	routeDetails.AddTransportToRoute(primitives.Train)
-	routeDetails.AddTransportToRoute(primitives.Train)
-
+	routeDetails.AddTransportToRoute("Batmobile")
 	routesAggregator.GoOverRoute(routeDetails)
 
 }

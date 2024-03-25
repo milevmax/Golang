@@ -1,6 +1,9 @@
 package transport
 
-import "fmt"
+import (
+	"fmt"
+	"homeworkTask1/primitives"
+)
 
 type Bus struct {
 }
@@ -33,6 +36,7 @@ func (t Train) DropOffPassengers() {
 }
 
 type ErrorTransport struct {
+	ErrorTransportName primitives.TransportType
 }
 
 func (t ErrorTransport) ReceivePassengers() {
@@ -40,4 +44,8 @@ func (t ErrorTransport) ReceivePassengers() {
 }
 func (t ErrorTransport) DropOffPassengers() {
 	fmt.Println("ErrorTransport")
+}
+
+func (t ErrorTransport) String() string {
+	return fmt.Sprintf("Transport name: %s", t.ErrorTransportName)
 }
