@@ -2,7 +2,7 @@ package routesAggregator
 
 import (
 	"fmt"
-	"homeworkTask1/primitives"
+	"homeworkTask1/planing"
 	"homeworkTask1/transport"
 )
 
@@ -17,15 +17,15 @@ func UseTransport(transport PublicTransport) {
 	fmt.Println("\nTransfer to another transport\n")
 }
 
-func NewRouteTransport(transportName primitives.TransportType) PublicTransport {
+func NewRouteTransport(transportName planing.TransportType) PublicTransport {
 	switch transportName {
-	case primitives.Bus:
+	case planing.Bus:
 		t := transport.Bus{}
 		return t
-	case primitives.Train:
+	case planing.Train:
 		t := transport.Train{}
 		return t
-	case primitives.Plane:
+	case planing.Plane:
 		t := transport.Plane{}
 		return t
 	default:
@@ -33,7 +33,7 @@ func NewRouteTransport(transportName primitives.TransportType) PublicTransport {
 	}
 }
 
-func GoOverRoute(route primitives.Route) {
+func GoOverRoute(route planing.Route) {
 	for _, t := range route {
 		routeComponentTransport := NewRouteTransport(t)
 		if _, ok := routeComponentTransport.(transport.ErrorTransport); ok {

@@ -2,7 +2,7 @@ package transport
 
 import (
 	"fmt"
-	"homeworkTask1/primitives"
+	"homeworkTask1/planing"
 )
 
 type Bus struct {
@@ -36,7 +36,7 @@ func (t Train) DropOffPassengers() {
 }
 
 type ErrorTransport struct {
-	ErrorTransportName primitives.TransportType
+	ErrorTransportName planing.TransportType
 }
 
 func (t ErrorTransport) ReceivePassengers() {
