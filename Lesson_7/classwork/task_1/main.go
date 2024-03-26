@@ -13,8 +13,18 @@ func main() {
 	ch := make(chan int)
 	go sendNumber(ch)
 
-	for val := range ch {
-		fmt.Println(val)
+	//for val := range ch {
+	//	fmt.Println(val)
+	//}
+
+	for {
+		val, open := <-ch
+		if open {
+			fmt.Println(val)
+		} else {
+			break
+		}
 	}
+
 	fmt.Println("Done!")
 }

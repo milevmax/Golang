@@ -3,29 +3,24 @@ package main
 import "fmt"
 
 func sendNumber(ch chan int) {
-	//for i := 0; i < 1000000; i += 1 + i*i {
-	//	ch <- i
-	//}
-	//close(ch)
-
-	ch <- 10
-	ch <- 20
-	ch <- 30
+	for i := 0; i < 1000000; i += 1 + i*i {
+		ch <- i
+	}
+	close(ch)
 }
 
-func printNumber(ch chan int, wait chan bool) {
-	for val := range ch {
-		fmt.Println(val)
+func printNumbers(ch chan int, d chan struct{}) {
+	for i := range ch {
+		fmt.Println("get value: ", i)
 	}
-	wait <- true
-	close(wait)
+	fmt.Println("print done!")
+	d <- struct{}{}
 }
 
 func main() {
 	ch := make(chan int)
-	done := make(chan bool)
+	done := make(chan struct{})
 	go sendNumber(ch)
-	go printNumber(ch, done)
+	go printNumbers(ch, done)
 	<-done
-	fmt.Println("Done!")
 }
