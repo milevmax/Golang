@@ -1,20 +1,24 @@
 package main
 
 import (
-	"homeworkTask1/planing"
-	"homeworkTask1/routesAggregator"
+	"fmt"
+	"homeworkTask1/routes"
 )
 
 func main() {
-	routeDetails := planing.Route{}
-	routeDetails.AddTransportToRoute(planing.Bus)
-	routeDetails.AddTransportToRoute(planing.Plane)
-	routeDetails.ShowTransportsRoute()
 
-	routesAggregator.GoOverRoute(routeDetails)
+	busTransport1, _ := routes.NewPublicTransport(routes.Bus)
+	planeTransport1, _ := routes.NewPublicTransport(routes.Plane)
+	busTransport2, _ := routes.NewPublicTransport(routes.Bus)
+	trainTransport1, _ := routes.NewPublicTransport(routes.Train)
 
-	routeDetails.AddTransportToRoute(planing.Train)
-	routeDetails.AddTransportToRoute("Batmobile")
-	routesAggregator.GoOverRoute(routeDetails)
+	fmt.Println(busTransport1.GetMaxDistance(), planeTransport1.GetMaxDistance())
 
+	trip := routes.Trip{}
+	trip.AddTripComponent(busTransport1, 501)
+	trip.AddTripComponent(planeTransport1, 2000)
+	trip.AddTripComponent(busTransport2, 120)
+	trip.AddTripComponent(trainTransport1, 530)
+
+	trip.PassTrip()
 }
